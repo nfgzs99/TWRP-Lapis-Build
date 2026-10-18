@@ -1,0 +1,18 @@
+# Dynamic Partitions
+ro.boot.dynamic_partitions=true
+
+# Fstab
+ro.postinstall.fstab.prefix=/system
+
+# USB MTP
+ro.sys.usb.storage.type=mtp
+
+# Gatekeeper
+ro.hardware.gatekeeper=trustonic
+
+# TEE
+ro.vendor.mtk_tee_gp_support=1
+ro.vendor.mtk_trustonic_tee_support=1
+
+# Misc
+ro.vendor.mediatek.platform=MT6878
