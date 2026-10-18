@@ -43,8 +43,10 @@ jobs:
         run: |
           cd twrp
           mkdir -p device/xiaomi/lapis
-          # 把仓库里的代码复制到源码树
-          cp -r $GITHUB_WORKSPACE/. device/xiaomi/lapis/
+          
+          # 把仓库里的代码复制到源码树（用通配符避开隐藏文件夹）
+          cp -r $GITHUB_WORKSPACE/* device/xiaomi/lapis/
+          
           # 强行把官方内核和DTB塞进编译路径
           cp $GITHUB_WORKSPACE/prebuilt/kernel device/xiaomi/lapis/prebuilt/kernel
           cp $GITHUB_WORKSPACE/prebuilt/dtb.img device/xiaomi/lapis/prebuilt/dtb.img
