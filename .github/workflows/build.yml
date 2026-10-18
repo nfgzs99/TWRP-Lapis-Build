@@ -26,6 +26,13 @@ jobs:
 
       - name: Download TWRP Source
         run: |
+          # 下载 repo 工具并赋予权限
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          export PATH=$PATH:~/bin
+
+          # 开始拉取源码
           mkdir twrp && cd twrp
           git config --global user.name "runner"
           git config --global user.email "runner@github.com"
@@ -41,6 +48,8 @@ jobs:
           # 强行把官方内核和DTB塞进编译路径
           cp $GITHUB_WORKSPACE/prebuilt/kernel device/xiaomi/lapis/prebuilt/kernel
           cp $GITHUB_WORKSPACE/prebuilt/dtb.img device/xiaomi/lapis/prebuilt/dtb.img
+          
+          # 加载编译环境
           source build/envsetup.sh
           lunch twrp_lapis-eng
           mka bootimage -j$(nproc)
