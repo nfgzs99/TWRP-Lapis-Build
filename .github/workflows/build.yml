@@ -42,12 +42,12 @@ jobs:
       - name: Build TWRP
         run: |
           cd twrp
-          mkdir -p device/xiaomi/lapis
+          mkdir -p device/xiaomi/lapis/prebuilt
           
-          # 把仓库里的代码复制到源码树（用通配符避开隐藏文件夹）
-          cp -r $GITHUB_WORKSPACE/* device/xiaomi/lapis/
+          # 使用 find 命令复制，彻底避开 twrp 源码目录和 .git 隐藏文件夹，防止死循环
+          find $GITHUB_WORKSPACE -mindepth 1 -maxdepth 1 ! -name "twrp" ! -name ".git" -exec cp -r {} device/xiaomi/lapis/ \;
           
-          # 强行把官方内核和DTB塞进编译路径
+          # 强行确保官方内核和DTB已在正确位置
           cp $GITHUB_WORKSPACE/prebuilt/kernel device/xiaomi/lapis/prebuilt/kernel
           cp $GITHUB_WORKSPACE/prebuilt/dtb.img device/xiaomi/lapis/prebuilt/dtb.img
           
